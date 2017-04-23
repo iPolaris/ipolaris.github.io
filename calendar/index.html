@@ -315,9 +315,9 @@ function processData(msg) {
 	// 	alert(i);
 	// 	alert(item);
 	// });
-	//$('#calendar').fullCalendar('removeEvents');
+	$('#calendar').fullCalendar('removeEvents');
 	$('#calendar').fullCalendar('addEventSource', events);
-	//console.log(JSON.stringify(msg, 2, 2));
+	console.log(JSON.stringify(msg, 2, 2));
 
 }
 function setfmt() {if(global_wb) process_wb(global_wb); }
