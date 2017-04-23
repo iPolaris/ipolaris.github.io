@@ -45,7 +45,7 @@ var Canvas2Image = function () {
 
 	function saveFile (strData) {
 		$('#downloadImage').attr('href', strData);
-		$('#downloadImage').attr('download', new Date()+'.png');
+		$('#downloadImage').attr('download', new Date().getTime()+'.png');
 		$('#downloadImage')[0].click();
 		//document.location.href = strData;
 	}
