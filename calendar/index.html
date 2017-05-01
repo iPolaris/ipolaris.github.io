@@ -30,8 +30,22 @@ a { text-decoration: none }
 		<script src='./js/fullcalendar.min.js'></script>
 		<script src='./js/html2canvas.min.js'></script>
 		<script src='./js/canvas2image.js'></script>
+		<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+		<!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+		<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script>
+		ch_month = ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"];
+		en_month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+		en_month_kv = {"January":"Jan","February":"Feb","March":"Mar","April":"Apr","May":"May","June":"Jun","July":"Jul",
+		"August":"Aug","September":"Sep","October":"Oct","November":"Nov","December":"Dec"};
+		en_ch_month_kv={"January":"一月","February":"二月","March":"三月","April":"四月","May":"五月","June":"六月","July":"七月",
+		"August":"八月","September":"九月","October":"十月","November":"十一月","December":"十二月"};
+		en_week=["SUN","MON","TUE","WED","THU","FRI","SAT"];
 			$(function(){
 				$('#calendar').fullCalendar({
 					header: {
@@ -39,16 +53,17 @@ a { text-decoration: none }
 						center: 'title',
 						right: 'month,basicWeek,basicDay'
 					},
+					titleFormat:'MMMM',
 					buttonText:{
 						'today':'今天',
 						'month':'月',
 						'week':'周',
 						'day':'日'
 					},
-					monthNames:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
-					monthNamesShort:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
-					dayNames:['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-					dayNamesShort:['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+					// monthNames:en_month,
+					// monthNamesShort:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+					//dayNames:['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+					dayNamesShort:en_week,
 					firstDay:1,
 					editable: true,
 					timeFormat: 'H:mm',
@@ -60,6 +75,7 @@ a { text-decoration: none }
 					]
 				});
 			});
+
 		</script>
 		<style>
 
@@ -71,20 +87,125 @@ a { text-decoration: none }
 			}
 
 			#calendar {
-				max-width: 900px;
+				max-width: 100%;
 				margin: 0 auto;
+				margin-left: 0px;
+				padding-right: 10px;
+				padding-left:10px;
+				margin-bottom: 5em;
+			}
+			#c-title-panel{
+				max-width: 45%
 			}
 			th.fc-mon,th.fc-tue,th.fc-wed,th.fc-thu,th.fc-fri{
 				background-color: #7F7F7F;
+				color: white;
 			}
 			th.fc-day-header{
 				padding-top: 8px;
 				padding-bottom: 8px;
 			}
 			th.fc-sat,th.fc-sun{
-				background-color: #FF1E00
+				color: white;
+				background-color: #FF1E00;
 			}
+			#data-panel{
+				display: flex;
+				border: 1px solid red;
+			}
+			.fc-right {
+				display: none;
+			}
+			.fc-toolbar .fc-left{
+				float: right;
+			}
+			.fc-toolbar .fc-center{
+				float: left;
+				color: red;
+				font-size: 18px;
+			}
+			#event-table{
+				width: 55%;
+				border-left: 2px solid red;
+				/*background-color: red;*/
+				/*padding: 10px;*/
+			}
+			.event-title{
+				background-color: red;
+				margin-top: -4px;
+				border: 2px solid white;
+				-webkit-box-shadow:0 0 15px red;
+  			-moz-box-shadow:0 0 15px red;
+  			box-shadow:0 0 15px red;
+			}
+			.fc-toolbar.fc-header-toolbar{
+				margin-bottom: 0em;
+			}
+			#c-logo{
+				max-width: 60%;
+				height: auto;
+			}
+			#disc-desc{
+				color: red;
+				font-size: 1.8em;
+				font-weight: bold;
+				width: 100%;
+				padding-right: 10px;
+			}
+			#circle-month{
+				width: 100%;
 
+
+				text-align: center;
+				color: red;
+				font-size: 3em;
+				font-weight: bold;
+			}
+			.color-group{
+				width: 25%
+			}
+			/*td.bm-title{
+				width: 17%
+			}*/
+			.bm-color{
+				padding:0px !important;
+			}
+			.bm-text{
+				text-align: right;
+			}
+			.bm-color-val{
+				min-height: 1.1em;
+			}
+			.bm-color-val-zy {
+				background-color: #FEDD28;
+			}
+			.bm-color-val-qy{
+				background-color: #FCCBA1;
+			}
+			.bm-color-val-pe{
+				background-color: #CEDDAB;
+			}
+			.bm-color-val-xs{
+				background-color: #C0B2D1
+			}
+			.event-title{
+				color: white;
+				text-align: center;
+				margin-left: -5px;
+				margin-right: -5px;
+			}
+			.event-year{
+				font-size: 4em;
+			}
+			.event-desc{
+				font-size: 1.8em
+			}
+			.event-month{
+				font-size: 3em
+			}
+			.event-dist{
+				font-size: 1.5em
+			}
 		</style>
 </head>
 <body>
@@ -110,9 +231,62 @@ Use readAsBinaryString: (when available) <input type="checkbox" name="userabs" c
 <!-- uncomment the next line here and in xlsxworker.js for encoding support -->
 		<div style="margin:20px">
 			<input type="button" id="toImageBt" value="日历->图片">
+			尺寸缩放：
+			<select id="body-select">
+  			<option value ="100%">100%</option>
+  			<option value ="120%">120%</option>
+  			<option value="140%">140%</option>
+  			<option value="160%">160%</option>
+				<option value="180%">180%</option>
+				<option value="200%">200%</option>
+			</select>
 			<a href="" id="downloadImage" style="display:none;">downloadImage</a>
 		</div>
-		<div id='calendar'></div>
+	<div id="data-panel">
+		<div id="c-title-panel">
+			<section id="banner-sec" style="display:flex; padding:10px">
+				<div id="c-logo">
+					<img style="width:100%" src="img/c_logo.png">
+				</div>
+				<div id="disc-month" style="width:60%;display:inherit;float:right;margin-left:auto;margin-right:2m;padding:0.4em">
+					<div id="disc-desc"><label id="dis-name" style="position:relative;bottom:-65%;float:right">- -</label></div>
+					<div id="circle-month"><label id="top-month"></label></div>
+				</div>
+			</section>
+			<div style="padding-left:5px;padding-right:5px;margin-right:1.5em">
+			  <div class="col-xs-3 bm-color col-md-3"><div class="col-xs-7 col-md-7 bm-text bm-color">中央市场部&nbsp</div><div class="col-xs-5 bm-color bm-color-val bm-color-val-zy col-md-5"></div></div>
+				<div class="col-xs-3 bm-color col-md-3"><div class="col-xs-7 col-md-7 bm-text bm-color">区域市场部&nbsp</div><div class="col-xs-5 bm-color bm-color-val bm-color-val-qy col-md-5"></div></div>
+				<div class="col-xs-2 bm-color col-md-2"><div class="col-xs-4 col-md-4 bm-text bm-color">PE&nbsp</div><div class="col-xs-8 bm-color bm-color-val bm-color-val-pe col-md-8"></div></div>
+				<div class="col-xs-4 bm-color col-md-4"><div class="col-xs-7 col-md-7 bm-text bm-color">销售自主活动&nbsp</div><div class="col-xs-4 bm-color bm-color-val bm-color-val-xs col-md-4"></div></div>
+			</div>
+			<div id='calendar'></div>
+		</div>
+		<div id="event-table">
+			<div class="event-title">
+				<span>
+					<lable class="event-year" id="event-year"></lable>
+					<label class="event-desc">MIP & ENERGY</label>
+					<label class="event-month">--</label>
+					<label class="event-desc">活动一览表</label>
+					<label class="event-dist">(南区)</label>
+				</span>
+			</div>
+			<table style="width:100%; margin-top:20px;color:white;border-collapse:collapse;">
+					<tr style="text-align:left; color:black">
+						<th style="width:9%">开始日期</th>
+						<th style="width:9%">结束日期</th>
+						<th>活动名称</th>
+						<th>地点</th>
+						<th>活动类型</th>
+						<th>术式</th>
+						<th>负责人</th>
+						<th>联系方式</th>
+					</tr>
+					<tbody id="event-body">
+				</tbody>
+			</table>
+		</div>
+	</div>
 
 <script src="dist/cpexcel.js"></script>
 <script src="shim.js"></script>
@@ -290,7 +464,7 @@ function process_wb(wb) {
 	if(typeof console !== 'undefined') console.log("output", new Date());
 }
 var colors={'区域市场部':'#F9C090','销售自主活动':'#B3A2C7','中央市场部':'#C01300','PE':'#C3D69B'};
-
+sheetData = null;
 function processData(msg) {
 	if (null == msg) {
 		alert("处理失败或数据格式不正确!")
@@ -300,16 +474,96 @@ function processData(msg) {
 		alert("请确定表格内存在Sheet1的表格");
 	}
 	var events = [];
-	$.each(data, function(index, item){
-		if (undefined != item.活动名称 && null != item.活动名称 && undefined != item.活动开始时间 && null != item.活动开始时间) {
-			var event = {"title":item.活动名称,"start":new Date($.trim(item.活动开始时间.replace("年","/").replace("月","/").replace("日", ""))),
-					"end":new Date($.trim(item.活动结束时间.replace("年","/").replace("月","/").replace("日", " 23:59:59"))),"color":colors[item.活动类型]};
+	var disName= "--";
+	sheetData = new Array();
+	var tmpData = data.slice(0);
+	$.each(tmpData, function(index, item){
+		 if (undefined != item.活动名称 && null!=item.活动名称 && $.trim(item.活动名称)!='') {
+		 		sheetData.push(item);
+		 }
+	});
 
+	console.log(sheetData.length);
+	var typeIndex = {"中央市场部":0, "区域市场部":1,"PE":2,"销售自主活动":3};
+	var eventTypeSort = function(o, p){
+		a = o["活动类型"];
+		b = p["活动类型"];
+		if(null == a){
+			a=5;
+		}else {
+			a = typeIndex[a];
+		}
+		if (null == b) {
+			b = 5;
+		}else{
+			b = typeIndex[b];
+		}
+		if (a === b) {
+			return 0;
+		}
+		if (typeof a === typeof b) {
+			return a < b ? -1 : 1;
+		}
+		return typeof a < typeof b ? -1 : 1;
+	}
+	var sheetSort = function(name){
+		return function(o, p){
+			var result1 = eventTypeSort(o, p);
+			if (0 != result1) {
+				return result1;
+			}
+			var a, b;
+		   if (typeof o === "object" && typeof p === "object" && o && p) {
+
+		     a = o[name];
+		     b = p[name];
+				 try{
+					 if (!a.endsWith("日")) {
+					 	 a = 10000000000000;
+					 }else{
+				 		a = new Date($.trim(a.replace("年","/").replace("月","/").replace("日", ""))).getTime();
+					}
+				 }catch(e){
+				 	a = 10000000000000;
+				 }
+				 try{
+					 if (!b.endsWith("日")) {
+					 	 bug= 10000000000000;
+					 }else{
+				 	b = new Date($.trim(b.replace("年","/").replace("月","/").replace("日", ""))).getTime();
+					}
+				 }catch(e){
+				 	b = 10000000000000;
+				 }
+
+		     if (a === b) {
+		       return 0;
+		     }
+		     if (typeof a === typeof b) {
+		       return a < b ? -1 : 1;
+		     }
+		     return typeof a < typeof b ? -1 : 1;
+		   }
+		   else {
+		     throw ("error");
+		   }
+		}
+	}
+	sheetData.sort(sheetSort("活动开始日期"));
+
+	$.each(data, function(index, item){
+		if (undefined != item.举办地点 && null != item.举办地点 &&
+			undefined != item.术式 && null != item.术式 &&
+			undefined != item.活动开始日期 && null != item.活动开始日期) {
+			var event = {"title":item.举办地点+"，"+item.术式,"start":new Date($.trim(item.活动开始日期.replace("年","/").replace("月","/").replace("日", ""))),
+					"end":new Date($.trim(item.活动结束日期.replace("年","/").replace("月","/").replace("日", " 23:59:59"))),"color":colors[item.活动类型]};
+			disName = item.区域;
 			events.push(event);
-					console.log(item.活动名称+$.trim(item.活动开始时间.replace("年","/").replace("月","/").replace("日", "")));
-					console.log($.trim(item.活动结束时间.replace("年","/").replace("月","/").replace("日", "")));
+					console.log(item.活动名称+$.trim(item.活动开始日期.replace("年","/").replace("月","/").replace("日", "")));
+					console.log($.trim(item.活动结束日期.replace("年","/").replace("月","/").replace("日", "")));
 		}
 	})
+	$("#dis-name").html(disName);
 	// alert(events);
 	// $.each(msg, function(i, item){
 	// 	alert(i);
@@ -317,6 +571,46 @@ function processData(msg) {
 	// });
 	$('#calendar').fullCalendar('removeEvents');
 	$('#calendar').fullCalendar('addEventSource', events);
+	$("#event-body").html('');
+	$.each(sheetData, function(index, item){
+		var startDate;
+		try{
+			if(!item["活动开始日期"].endsWith("日")){
+				startDate="待定";
+			}else {
+				startDate = $.trim(item["活动开始日期"].replace("年","").replace("2017",""));
+			}
+		}catch(e){
+			startDate="待定";
+		}
+		var endDate;
+		try{
+			if(!item["活动结束日期"].endsWith("日")){
+				endDate="待定";
+			}else {
+				endDate = $.trim(item["活动结束日期"].replace("年","").replace("2017",""));
+			}
+		}catch(e){
+			endDate="待定";
+		}
+		var eventName = item["活动名称"];
+		var place = item["举办地点"];
+		var type= item["活动类型"];
+		var sh = item["术式"];
+		var master = item["负责人"];
+		var tel = item["负责人手机号"];
+		var tr = '<tr style="text-align:left; color:black;background-color:'+colors[type]+'">'
+			+'<td>'+startDate+'</td>'
+			+'<td>'+endDate+'</td>'
+			+'<td>'+eventName+'</td>'
+			+'<td>'+place+'</td>'
+			+'<td>'+type+'</td>'
+			+'<td>'+sh+'</td>'
+			+'<td style="background-color:white">'+(null != master?master:'--')+'</td>'
+			+'<td style="background-color:white">'+(null != tel?tel:'--')+'</td>'
+			+'</tr>';
+			$("#event-body").append(tr);
+	})
 	console.log(JSON.stringify(msg, 2, 2));
 
 }
@@ -376,23 +670,25 @@ function saveHtml2Image(objId, scale) {
                 background: "rgba(255,255,255,1)",
                 onrendered: function (canvas) {
                     var dataUrl = Canvas2Image.saveAsPNG(canvas, parseInt(width * scale), parseInt(height * scale));
-                    var totalSize = dataUrl.length / 1024 / 1024;
-                    if (totalSize > 1.3) {
-                        dataUrl = null;
-                        scale = scale - 0.1;
-                        saveHtml2Image(objId, scale);
-                    }
-                    else {
-                        $('#downloadImage').attr('href', dataUrl);
-                        $('#downloadImage').attr('download', 'test.jpg');
-                        $('#downloadImage')[0].click();
-                    }
+                    // var totalSize = dataUrl.length / 1024 / 1024;
+                    // if (totalSize > 1.3) {
+                    //     dataUrl = null;
+                    //     scale = scale - 0.1;
+                    //     saveHtml2Image(objId, scale);
+                    // }
+                    // else {
+                    //     $('#downloadImage').attr('href', dataUrl);
+                    //     $('#downloadImage').attr('download', 'test.jpg');
+                    //     $('#downloadImage')[0].click();
+                    // }
                 }
             });
         }
 
  $("#toImageBt").click(function(){
-	 	saveHtml2Image("calendar", 1);
+	 $(".fc-header-toolbar").hide();
+	 	saveHtml2Image("data-panel", 1);
+		$(".fc-header-toolbar").show();
  })
 var xlf = document.getElementById('xlf');
 function handleFile(e) {
@@ -425,6 +721,27 @@ function handleFile(e) {
 }
 
 //if(xlf.addEventListener) xlf.addEventListener('change', handleFile, false);
+</script>
+<script>
+	$(function(){
+		$("#circle-month").css("line-height",$("#circle-month").css("height"));
+		$("#top-month").html(en_month_kv[$(".fc-center").find("h2").html()]);
+		$(".fc-button-group").find("button").click(function(){
+			$("#top-month").html(en_month_kv[$(".fc-center").find("h2").html()]);
+		});
+		$(".fc-today-button").click(function(){
+			$("#top-month").html(en_month_kv[$(".fc-center").find("h2").html()]);
+		});
+		$("#event-year").html(new Date().getFullYear());
+		$(".event-month").html(en_ch_month_kv[$(".fc-center").find("h2").html()]);
+		var tH1 = $("#banner-sec").height();
+		//var tH2 = $(".bm-color").height();
+		$(".event-title").css("height",(tH1)+"px").css("line-height",(tH1)+"px");
+		$("#body-select").change(function(){
+			$("body").css("width",$(this).val());
+		})
+		//$("#disc-month").hide();
+	})
 </script>
 <!-- <script type="text/javascript">
 	var _gaq = _gaq || [];
