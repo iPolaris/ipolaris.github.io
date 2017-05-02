@@ -70,12 +70,13 @@ a { text-decoration: none }
 					axisFormat: 'H:mm',
 					navLinks: true, // can click day/week names to navigate views
 					editable: true,
-					eventLimit: true, // allow "more" link when too many events
+					eventLimit: false, // allow "more" link when too many events
 					events: [
 					]
 				});
 			});
-
+$(".fc-scroller").css("height", "100%");
+$(".fc-day-grid-container").css("height", "100%");
 		</script>
 		<style>
 
@@ -205,6 +206,12 @@ a { text-decoration: none }
 			}
 			.event-dist{
 				font-size: 1.5em
+			}
+			.fc-other-month .fc-day-number{
+				display: none;
+			}
+			.fc-content{
+				text-align: center;
 			}
 		</style>
 </head>
@@ -573,6 +580,7 @@ function processData(msg) {
 	$('#calendar').fullCalendar('removeEvents');
 	$('#calendar').fullCalendar('addEventSource', events);
 	$("#event-body").html('');
+	$(".fc-scroller").css("height", "100%");
 	$.each(sheetData, function(index, item){
 		var startDate;
 		try{
