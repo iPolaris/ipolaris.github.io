@@ -279,8 +279,8 @@ Use readAsBinaryString: (when available) <input type="checkbox" name="userabs" c
 						<th>地点</th>
 						<th>活动类型</th>
 						<th>术式</th>
-						<th style="background-color:white;color:black"> &nbsp负责人</th>
-						<th style="background-color:white;color:black">联系方式</th>
+						<th style="background-color:white;color:black;text-align:right">负责人</th>
+						<th style="background-color:white;color:black;text-align:right">联系方式</th>
 					</tr>
 					<tbody id="event-body">
 				</tbody>
@@ -606,8 +606,8 @@ function processData(msg) {
 			+'<td>'+place+'</td>'
 			+'<td>'+type+'</td>'
 			+'<td>'+sh+'</td>'
-			+'<td style="background-color:white">'+(null != master?master:'--')+'</td>'
-			+'<td style="background-color:white">'+(null != tel?tel:'--')+'</td>'
+			+'<td style="background-color:white;text-align:right">'+(null != master?master:'--')+'</td>'
+			+'<td style="background-color:white;text-align:right">'+(null != tel?tel:'--')+'</td>'
 			+'</tr>';
 			$("#event-body").append(tr);
 	})
