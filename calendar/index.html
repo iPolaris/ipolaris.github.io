@@ -268,7 +268,7 @@ Use readAsBinaryString: (when available) <input type="checkbox" name="userabs" c
 					<label class="event-desc">MIP & ENERGY</label>
 					<label class="event-month">--</label>
 					<label class="event-desc">活动一览表</label>
-					<label class="event-dist">(南区)</label>
+					<label class="event-dist"></label>
 				</span>
 			</div>
 			<table style="width:100%; margin-top:20px;color:white;border-collapse:collapse;">
@@ -476,8 +476,8 @@ function processData(msg) {
 	var events = [];
 	var disName= "--";
 	sheetData = new Array();
-	var tmpData = data.slice(0);
-	$.each(tmpData, function(index, item){
+	//var tmpData = data.slice(0);
+	$.each(data, function(index, item){
 		 if (undefined != item.活动名称 && null!=item.活动名称 && $.trim(item.活动名称)!='') {
 		 		sheetData.push(item);
 		 }
@@ -564,6 +564,7 @@ function processData(msg) {
 		}
 	})
 	$("#dis-name").html(disName);
+	$(".event-dist").html("("+disName+")");
 	// alert(events);
 	// $.each(msg, function(i, item){
 	// 	alert(i);
