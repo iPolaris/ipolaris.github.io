@@ -158,7 +158,7 @@ a { text-decoration: none }
 
 				text-align: center;
 				color: red;
-				font-size: 3em;
+				font-size: 3.5em;
 				font-weight: bold;
 			}
 			.color-group{
@@ -280,7 +280,7 @@ Use readAsBinaryString: (when available) <input type="checkbox" name="userabs" c
 						<th>活动类型</th>
 						<th>术式</th>
 						<th style="background-color:white;color:black;text-align:right">负责人</th>
-						<th style="background-color:white;color:black;text-align:right">联系方式</th>
+						<th style="background-color:white;color:black;text-align:right;padding-right:3px">联系方式</th>
 					</tr>
 					<tbody id="event-body">
 				</tbody>
@@ -554,7 +554,7 @@ function processData(msg) {
 	$.each(data, function(index, item){
 		if (undefined != item.举办地点 && null != item.举办地点 &&
 			undefined != item.术式 && null != item.术式 &&
-			undefined != item.活动开始日期 && null != item.活动开始日期) {
+			undefined != item.活动开始日期 && null != item.活动开始日期 && undefined != item.活动结束日期 && null != item.活动结束日期 ) {
 			var event = {"title":item.举办地点+"，"+item.术式,"start":new Date($.trim(item.活动开始日期.replace("年","/").replace("月","/").replace("日", ""))),
 					"end":new Date($.trim(item.活动结束日期.replace("年","/").replace("月","/").replace("日", " 23:59:59"))),"color":colors[item.活动类型]};
 			disName = item.区域;
@@ -608,7 +608,7 @@ function processData(msg) {
 			+'<td>'+type+'</td>'
 			+'<td>'+sh+'</td>'
 			+'<td style="background-color:white;text-align:right">'+(null != master?master:'--')+'</td>'
-			+'<td style="background-color:white;text-align:right">'+(null != tel?tel:'--')+'</td>'
+			+'<td style="background-color:white;text-align:right;padding-right:3px">'+(null != tel?tel:'--')+'</td>'
 			+'</tr>';
 			$("#event-body").append(tr);
 	})
@@ -726,6 +726,13 @@ function handleFile(e) {
 <script>
 	$(function(){
 		init();
+		var circle_month = $("#top-month").css("font-size").replace("px","");
+		var dis_name = $("#dis-name").css("font-size").replace("px","");
+		var event_year=$("#event-year").css("font-size").replace("px","");
+		var event_desc = $(".event-desc").css("font-size").replace("px","");
+		var event_month=$(".event-month").css("font-size").replace("px","");
+		var event_dist=$(".event-dist").css("font-size").replace("px","");
+
 		function init(){
 			$("#circle-month").css("line-height",$("#circle-month").css("height"));
 			$("#top-month").html(en_month_kv[$(".fc-center").find("h2").html()]);
@@ -744,6 +751,14 @@ function handleFile(e) {
 		});
 		$("#body-select").change(function(){
 			$("body").css("width",$(this).val());
+			var per = $(this).val().replace("%", "");
+			per = per/100.0;
+			$("#top-month").css("font-size", circle_month * per);
+			$("#dis-name").css("font-size", dis_name * per);
+			$("#event-year").css("font-size", event_year * per);
+			$(".event-desc").css("font-size", event_desc * per);
+			$(".event-month").css("font-size", event_month * per);
+			$(".event-dist").css("font-size", event_dist * per);
 			init();
 		})
 		//$("#disc-month").hide();
