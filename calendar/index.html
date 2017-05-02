@@ -272,15 +272,15 @@ Use readAsBinaryString: (when available) <input type="checkbox" name="userabs" c
 				</span>
 			</div>
 			<table style="width:100%; margin-top:20px;color:white;border-collapse:collapse;">
-					<tr style="text-align:left; color:black">
+					<tr style="text-align:left; color:white;background-color:red">
 						<th style="width:9%">开始日期</th>
 						<th style="width:9%">结束日期</th>
 						<th>活动名称</th>
 						<th>地点</th>
 						<th>活动类型</th>
 						<th>术式</th>
-						<th>负责人</th>
-						<th>联系方式</th>
+						<th style="background-color:white;color:black"> &nbsp负责人</th>
+						<th style="background-color:white;color:black">联系方式</th>
 					</tr>
 					<tbody id="event-body">
 				</tbody>
@@ -463,7 +463,7 @@ function process_wb(wb) {
 	//  else out.innerText = output;
 	if(typeof console !== 'undefined') console.log("output", new Date());
 }
-var colors={'区域市场部':'#F9C090','销售自主活动':'#B3A2C7','中央市场部':'#C01300','PE':'#C3D69B'};
+var colors={'区域市场部':'#F9C090','销售自主活动':'#B3A2C7','中央市场部':'#FEDD28','PE':'#C3D69B'};
 sheetData = null;
 function processData(msg) {
 	if (null == msg) {
@@ -724,21 +724,26 @@ function handleFile(e) {
 </script>
 <script>
 	$(function(){
-		$("#circle-month").css("line-height",$("#circle-month").css("height"));
-		$("#top-month").html(en_month_kv[$(".fc-center").find("h2").html()]);
+		init();
+		function init(){
+			$("#circle-month").css("line-height",$("#circle-month").css("height"));
+			$("#top-month").html(en_month_kv[$(".fc-center").find("h2").html()]);
+
+			$("#event-year").html(new Date().getFullYear());
+			$(".event-month").html(en_ch_month_kv[$(".fc-center").find("h2").html()]);
+			var tH1 = $("#banner-sec").height();
+			//var tH2 = $(".bm-color").height();
+			$(".event-title").css("height",(tH1)+"px").css("line-height",(tH1)+"px");
+		}
 		$(".fc-button-group").find("button").click(function(){
 			$("#top-month").html(en_month_kv[$(".fc-center").find("h2").html()]);
 		});
 		$(".fc-today-button").click(function(){
 			$("#top-month").html(en_month_kv[$(".fc-center").find("h2").html()]);
 		});
-		$("#event-year").html(new Date().getFullYear());
-		$(".event-month").html(en_ch_month_kv[$(".fc-center").find("h2").html()]);
-		var tH1 = $("#banner-sec").height();
-		//var tH2 = $(".bm-color").height();
-		$(".event-title").css("height",(tH1)+"px").css("line-height",(tH1)+"px");
 		$("#body-select").change(function(){
 			$("body").css("width",$(this).val());
+			init();
 		})
 		//$("#disc-month").hide();
 	})
