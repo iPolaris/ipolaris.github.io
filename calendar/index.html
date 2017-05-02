@@ -753,9 +753,11 @@ function handleFile(e) {
 		}
 		$(".fc-button-group").find("button").click(function(){
 			$("#top-month").html(en_month_kv[$(".fc-center").find("h2").html()]);
+			$(".event-month").html(en_ch_month_kv[$(".fc-center").find("h2").html()]);
 		});
 		$(".fc-today-button").click(function(){
 			$("#top-month").html(en_month_kv[$(".fc-center").find("h2").html()]);
+			$(".event-month").html(en_ch_month_kv[$(".fc-center").find("h2").html()]);
 		});
 		$("#body-select").change(function(){
 			$("body").css("width",$(this).val());
