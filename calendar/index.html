@@ -6,9 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>HZR-Calendar</title>
 <style>
-html{
-	overflow-y: hidden;
-}
+
 #drop{
 	border:2px dashed #bbb;
 	-moz-border-radius:5px;
@@ -711,8 +709,10 @@ function saveHtml2Image(objId, scale) {
 
  $("#toImageBt").click(function(){
 	 $(".fc-header-toolbar").hide();
+	 $("html").css("overflow-y","hidden");
 	 	saveHtml2Image("data-panel", 1);
 		$(".fc-header-toolbar").show();
+		$("html").css("overflow-y","visible");
  })
 var xlf = document.getElementById('xlf');
 function handleFile(e) {
