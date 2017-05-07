@@ -6,6 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>HZR-Calendar</title>
 <style>
+html{
+	overflow-y: hidden;
+}
 #drop{
 	border:2px dashed #bbb;
 	-moz-border-radius:5px;
@@ -216,6 +219,14 @@ $(".fc-day-grid-container").css("height", "100%");
 			td.event-td{
 				padding-right: 10px;
 			}
+			.fc-event{
+				color: black;
+			}
+			.event-td-r{
+				background-color: red;
+				border: 1px solid red;
+			}
+
 		</style>
 </head>
 <body>
@@ -252,7 +263,8 @@ Use readAsBinaryString: (when available) <input type="checkbox" name="userabs" c
 			</select>
 			<a href="" id="downloadImage" style="display:none;">downloadImage</a>
 		</div>
-	<div id="data-panel">
+		<div id="data-container"  style="display:block; width:100%">
+	<div id="data-panel" style="width:100%;margin:0 auto">
 		<div id="c-title-panel">
 			<section id="banner-sec" style="display:flex; padding:10px">
 				<div id="c-logo">
@@ -282,22 +294,22 @@ Use readAsBinaryString: (when available) <input type="checkbox" name="userabs" c
 				</span>
 			</div>
 			<table style="width:100%; margin-top:20px;color:white;border-collapse:collapse;">
-					<tr style="text-align:left; color:white;background-color:red">
-						<th style="width:9%" class="event-td">开始日期</th>
-						<th style="width:9%" class="event-td">结束日期</th>
-						<th class="event-td" class="event-td">活动名称</th>
-						<th class="event-td">地点</th>
-						<th class="event-td">活动类型</th>
-						<th class="event-td">术式</th>
-						<th class="event-td" style="background-color:white;color:black;text-align:right">负责人</th>
-						<th class="event-td" style="background-color:white;color:black;text-align:right;padding-right:3px">联系方式</th>
+					<tr style="text-align:left; color:white;">
+						<th style="width:9%" class="event-td event-td-r">开始日期</th>
+						<th style="width:9%" class="event-td event-td-r">结束日期</th>
+						<th class="event-td event-td-r">活动名称</th>
+						<th class="event-td event-td-r">地点</th>
+						<th class="event-td event-td-r">活动类型</th>
+						<th class="event-td event-td-r">术式</th>
+						<th class="event-td" style="background-color:white;color:black;text-align:right;border: 0px solid white">负责人</th>
+						<th class="event-td" style="background-color:white;color:black;text-align:center;padding-right:3px;border: 0px solid white">联系方式</th>
 					</tr>
 					<tbody id="event-body">
 				</tbody>
 			</table>
 		</div>
 	</div>
-
+</div>
 <script src="dist/cpexcel.js"></script>
 <script src="shim.js"></script>
 <script src="jszip.js"></script>
@@ -611,15 +623,15 @@ function processData(msg) {
 		var sh = item["术式"];
 		var master = item["负责人"];
 		var tel = item["负责人手机号"];
-		var tr = '<tr style="text-align:left; color:black;background-color:'+colors[type]+'">'
-			+'<td class="event-td">'+startDate+'</td>'
-			+'<td class="event-td">'+endDate+'</td>'
-			+'<td class="event-td">'+eventName+'</td>'
-			+'<td class="event-td">'+place+'</td>'
-			+'<td class="event-td">'+type+'</td>'
-			+'<td class="event-td">'+sh+'</td>'
+		var tr = '<tr style="text-align:left; color:black;">'
+			+'<td class="event-td" style="background-color:'+colors[type]+';border: 1px solid '+colors[type]+';">'+startDate+'</td>'
+			+'<td class="event-td" style="background-color:'+colors[type]+';border: 1px solid '+colors[type]+';">'+endDate+'</td>'
+			+'<td class="event-td" style="background-color:'+colors[type]+';border: 1px solid '+colors[type]+';">'+eventName+'</td>'
+			+'<td class="event-td" style="background-color:'+colors[type]+';border: 1px solid '+colors[type]+';">'+place+'</td>'
+			+'<td class="event-td" style="background-color:'+colors[type]+';border: 1px solid '+colors[type]+';">'+type+'</td>'
+			+'<td class="event-td" style="background-color:'+colors[type]+';border: 1px solid '+colors[type]+';">'+sh+'</td>'
 			+'<td class="event-td" style="background-color:white;text-align:right">'+(null != master?master:'--')+'</td>'
-			+'<td class="event-td" style="background-color:white;text-align:right;padding-right:3px">'+(null != tel?tel:'--')+'</td>'
+			+'<td class="event-td" style="background-color:white;text-align:center;padding-right:3px">'+(null != tel?tel.replace("-",""):'--')+'</td>'
 			+'</tr>';
 			$("#event-body").append(tr);
 	})
