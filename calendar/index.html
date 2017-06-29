@@ -292,7 +292,7 @@ Use readAsBinaryString: (when available) <input type="checkbox" name="userabs" c
 				</span>
 			</div>
 			<table style="width:100%; margin-top:20px;color:white;border-collapse:collapse;">
-					<tr style="text-align:left; color:white;">
+					<tr style="text-align:left; color:white;font-size:1.3em">
 						<th style="width:9%" class="event-td event-td-r">开始日期</th>
 						<th style="width:9%" class="event-td event-td-r">结束日期</th>
 						<th class="event-td event-td-r">活动名称</th>
@@ -302,7 +302,7 @@ Use readAsBinaryString: (when available) <input type="checkbox" name="userabs" c
 						<th class="event-td" style="background-color:white;color:black;text-align:right;border: 0px solid white">负责人</th>
 						<th class="event-td" style="background-color:white;color:black;text-align:center;padding-right:3px;border: 0px solid white">联系方式</th>
 					</tr>
-					<tbody id="event-body">
+					<tbody id="event-body" style="font-size:1.2em">
 				</tbody>
 			</table>
 		</div>
@@ -506,8 +506,8 @@ function processData(msg) {
 	console.log(sheetData.length);
 	var typeIndex = {"中央市场部":0, "区域市场部":1,"PE":2,"销售自主活动":3};
 	var eventTypeSort = function(o, p){
-		a = o["活动类型"];
-		b = p["活动类型"];
+		a = $.trim(o["活动类型"]);
+		b = $.trim(p["活动类型"]);
 		if(null == a){
 			a=5;
 		}else {
@@ -576,7 +576,7 @@ function processData(msg) {
 			undefined != item.术式 && null != item.术式 &&
 			undefined != item.活动开始日期 && null != item.活动开始日期 && undefined != item.活动结束日期 && null != item.活动结束日期 ) {
 			var event = {"title":item.举办地点+"，"+item.术式,"start":new Date($.trim(item.活动开始日期.replace("年","/").replace("月","/").replace("日", ""))),
-					"end":new Date($.trim(item.活动结束日期.replace("年","/").replace("月","/").replace("日", " 23:59:59"))),"color":colors[item.活动类型]};
+					"end":new Date($.trim(item.活动结束日期.replace("年","/").replace("月","/").replace("日", " 23:59:59"))),"color":colors[$.trim(item.活动类型)]};
 			disName = item.区域;
 			events.push(event);
 					console.log(item.活动名称+$.trim(item.活动开始日期.replace("年","/").replace("月","/").replace("日", "")));
@@ -617,7 +617,7 @@ function processData(msg) {
 		}
 		var eventName = item["活动名称"];
 		var place = item["举办地点"];
-		var type= item["活动类型"];
+		var type= $.trim(item["活动类型"]);
 		var sh = item["术式"];
 		var master = item["负责人"];
 		var tel = item["负责人手机号"];
