@@ -54,7 +54,7 @@ a { text-decoration: none }
 						center: 'title',
 						right: 'month,basicWeek,basicDay'
 					},
-					titleFormat:'MMMM',
+					titleFormat:'YYYY-MMMM',
 					buttonText:{
 						'today':'今天',
 						'month':'月',
@@ -538,7 +538,8 @@ function processData(msg) {
 		     a = o[name];
 		     b = p[name];
 				 try{
-					 if (!a.endsWith("日")) {
+					 var aDateEles = a.split("/");
+					 if (null == aDateEles || aDateEles.length != 3) {
 					 	 a = 10000000000000;
 					 }else{
 				 		a = new Date($.trim(a.replace("年","/").replace("月","/").replace("日", ""))).getTime();
@@ -547,7 +548,8 @@ function processData(msg) {
 				 	a = 10000000000000;
 				 }
 				 try{
-					 if (!b.endsWith("日")) {
+					 var bDateEles = b.split("/");
+					 if (null == bDateEles || bDateEles.length != 3) {
 					 	 bug= 10000000000000;
 					 }else{
 				 	b = new Date($.trim(b.replace("年","/").replace("月","/").replace("日", ""))).getTime();
@@ -570,19 +572,26 @@ function processData(msg) {
 		}
 	}
 	sheetData.sort(sheetSort("活动开始日期"));
-
+	var globalDis = false;
 	$.each(data, function(index, item){
 		if (undefined != item.举办地点 && null != item.举办地点 &&
 			undefined != item.术式 && null != item.术式 &&
 			undefined != item.活动开始日期 && null != item.活动开始日期 && undefined != item.活动结束日期 && null != item.活动结束日期 ) {
 			var event = {"title":item.举办地点+"，"+item.术式,"start":new Date($.trim(item.活动开始日期.replace("年","/").replace("月","/").replace("日", ""))),
 					"end":new Date($.trim(item.活动结束日期.replace("年","/").replace("月","/").replace("日", " 23:59:59"))),"color":colors[$.trim(item.活动类型)]};
-			disName = item.区域;
+			if ('--'!=disName && disName != item.区域) {
+				globalDis = true;
+			}else{
+				disName = item.区域;
+			}
 			events.push(event);
 					console.log(item.活动名称+$.trim(item.活动开始日期.replace("年","/").replace("月","/").replace("日", "")));
 					console.log($.trim(item.活动结束日期.replace("年","/").replace("月","/").replace("日", "")));
 		}
 	})
+	if (globalDis) {
+		disName = "全国";
+	}
 	$("#dis-name").html(disName);
 	$(".event-dist").html("("+disName+")");
 	// alert(events);
@@ -597,20 +606,24 @@ function processData(msg) {
 	$.each(sheetData, function(index, item){
 		var startDate;
 		try{
-			if(!item["活动开始日期"].endsWith("日")){
-				startDate="待定";
-			}else {
-				startDate = $.trim(item["活动开始日期"].replace("年","").replace("2017",""));
+			startDate = $.trim(item["活动开始日期"]);
+			var startDateEles = startDate.split("/");
+			if (null == startDateEles || startDateEles.length != 3) {
+					startDate="待定";
+			}else{
+				startDate = startDateEles[1]+"月"+startDateEles[2]+"日";
 			}
 		}catch(e){
 			startDate="待定";
 		}
 		var endDate;
 		try{
-			if(!item["活动结束日期"].endsWith("日")){
+			endDate = $.trim(item["活动结束日期"]);
+			var endDateEles = endDate.split("/");
+			if(null == endDateEles || endDateEles.length != 3 ){
 				endDate="待定";
 			}else {
-				endDate = $.trim(item["活动结束日期"].replace("年","").replace("2017",""));
+				endDate = endDateEles[1]+"月"+endDateEles[2]+"日";
 			}
 		}catch(e){
 			endDate="待定";
@@ -758,21 +771,23 @@ function handleFile(e) {
 
 		function init(){
 			$("#circle-month").css("line-height",$("#circle-month").css("height"));
-			$("#top-month").html(en_month_kv[$(".fc-center").find("h2").html()]);
+			$("#top-month").html(en_month_kv[$(".fc-center").find("h2").html().split('-')[1]]);
 
 			$("#event-year").html(new Date().getFullYear());
-			$(".event-month").html(en_ch_month_kv[$(".fc-center").find("h2").html()]);
+			$(".event-month").html(en_ch_month_kv[$(".fc-center").find("h2").html().split('-')[1]]);
 			var tH1 = $("#banner-sec").height();
 			//var tH2 = $(".bm-color").height();
 			$(".event-title").css("height",(tH1)+"px").css("line-height",(tH1)+"px");
 		}
 		$(".fc-button-group").find("button").click(function(){
-			$("#top-month").html(en_month_kv[$(".fc-center").find("h2").html()]);
-			$(".event-month").html(en_ch_month_kv[$(".fc-center").find("h2").html()]);
+			$("#top-month").html(en_month_kv[$(".fc-center").find("h2").html().split('-')[1]]);
+			$(".event-month").html(en_ch_month_kv[$(".fc-center").find("h2").html().split('-')[1]]);
+			$("#event-year").html($(".fc-center").find("h2").html().split('-')[0]);
 		});
 		$(".fc-today-button").click(function(){
 			$("#top-month").html(en_month_kv[$(".fc-center").find("h2").html()]);
-			$(".event-month").html(en_ch_month_kv[$(".fc-center").find("h2").html()]);
+			$(".event-month").html(en_ch_month_kv[$(".fc-center").find("h2").html().split('-')[1]]);
+			$("#event-year").html($(".fc-center").find("h2").html().split('-')[0]);
 		});
 		$("#body-select").change(function(){
 			$("body").css("width",$(this).val());
