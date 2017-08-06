@@ -250,7 +250,7 @@ Use readAsBinaryString: (when available) <input type="checkbox" name="userabs" c
 <!-- uncomment the next line here and in xlsxworker.js for encoding support -->
 		<div style="margin:20px">
 			<input type="button" id="toImageBt" value="日历->图片">
-			尺寸缩放：
+			尺寸缩放：<input type="range" id="body-scale" min="1" value="100" max="1000" style="width:500px;display:initial" />
 			<select id="body-select">
   			<option value ="100%">100%</option>
   			<option value ="120%">120%</option>
@@ -789,6 +789,18 @@ function handleFile(e) {
 			$(".event-month").html(en_ch_month_kv[$(".fc-center").find("h2").html().split('-')[1]]);
 			$("#event-year").html($(".fc-center").find("h2").html().split('-')[0]);
 		});
+		$("#body-scale").change(function(){
+			$("body").css("width", $(this).val()+"%");
+			var per = $(this).val();
+			per = per/100.0;
+			$("#top-month").css("font-size", circle_month * per);
+			$("#dis-name").css("font-size", dis_name * per);
+			$("#event-year").css("font-size", event_year * per);
+			$(".event-desc").css("font-size", event_desc * per);
+			$(".event-month").css("font-size", event_month * per);
+			$(".event-dist").css("font-size", event_dist * per);
+			init();
+		})
 		$("#body-select").change(function(){
 			$("body").css("width",$(this).val());
 			var per = $(this).val().replace("%", "");
