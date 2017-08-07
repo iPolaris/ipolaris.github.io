@@ -208,9 +208,9 @@ $(".fc-day-grid-container").css("height", "100%");
 			.event-dist{
 				font-size: 1.5em
 			}
-			.fc-other-month .fc-day-number{
+			/*.fc-other-month .fc-day-number{
 				display: none;
-			}
+			}*/
 			.fc-content{
 				text-align: center;
 			}
@@ -251,6 +251,7 @@ Use readAsBinaryString: (when available) <input type="checkbox" name="userabs" c
 		<div style="margin:20px">
 			<input type="button" id="toImageBt" value="日历->图片">
 			尺寸缩放：<input type="range" id="body-scale" min="1" value="100" max="1000" style="width:500px;display:initial" />
+
 			<select id="body-select">
   			<option value ="100%">100%</option>
   			<option value ="120%">120%</option>
@@ -259,6 +260,8 @@ Use readAsBinaryString: (when available) <input type="checkbox" name="userabs" c
 				<option value="180%">180%</option>
 				<option value="200%">200%</option>
 			</select>
+
+			<input type="button" id="hsCalBt" class="showBt" value="隐藏日历按钮">
 			<a href="" id="downloadImage" style="display:none;">downloadImage</a>
 		</div>
 		<div id="data-container"  style="display:block; width:100%">
@@ -578,7 +581,7 @@ function processData(msg) {
 			undefined != item.术式 && null != item.术式 &&
 			undefined != item.活动开始日期 && null != item.活动开始日期 && undefined != item.活动结束日期 && null != item.活动结束日期 ) {
 			var event = {"title":item.举办地点+"，"+item.术式,"start":new Date($.trim(item.活动开始日期.replace("年","/").replace("月","/").replace("日", ""))),
-					"end":new Date($.trim(item.活动结束日期.replace("年","/").replace("月","/").replace("日", " 23:59:59"))),"color":colors[$.trim(item.活动类型)]};
+					"end":new Date($.trim(item.活动结束日期+  " 23:59:59")),"color":colors[$.trim(item.活动类型)]};
 			if ('--'!=disName && disName != item.区域) {
 				globalDis = true;
 			}else{
@@ -812,6 +815,19 @@ function handleFile(e) {
 			$(".event-month").css("font-size", event_month * per);
 			$(".event-dist").css("font-size", event_dist * per);
 			init();
+		})
+
+		$("#hsCalBt").click(function(){
+			if ($(this).hasClass("showBt")) {
+				$(".fc-header-toolbar").hide();
+				$(this).val("显示日历按钮");
+				$(this).removeClass("showBt").addClass("hideBt");
+			}else{
+				$(".fc-header-toolbar").show();
+				$(this).val("隐藏日历按钮");
+				$(this).addClass("showBt").removeClass("hideBt");
+			}
+
 		})
 		//$("#disc-month").hide();
 	})
